@@ -73,8 +73,8 @@ var ticTacToe = {
 	},
 	checkForTie: function() {
 		console.log(this.board);
-		for (let i = 1; i < this.board.length; i += 1) {
-			for (let j = 1; j < this.board[i].length; j += 1) {
+		for (let i = 0; i < this.board.length; i += 1) {
+			for (let j = 0; j < this.board[i].length; j += 1) {
 				if (this.board[i][j] === 0) {
 					return false;
 				}
