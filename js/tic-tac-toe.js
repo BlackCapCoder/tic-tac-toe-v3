@@ -34,6 +34,7 @@ var ticTacToe = {
 		return (this.board[row][column] === 0);
 	},
 	makeMove: function(row, column) {
+		console.log('makeMove() called with player: ' + this.player);
 		if (this.isEmptySquare(row, column)) {
 			this.board[row][column] = this.player;
 		}
@@ -71,8 +72,7 @@ var ticTacToe = {
 			return true;
 		}
 	},
-	checkForTie: function() {
-		console.log(this.board);
+	isBoardFull: function() { // This function cheks if the board is full
 		for (let i = 0; i < this.board.length; i += 1) {
 			for (let j = 0; j < this.board[i].length; j += 1) {
 				if (this.board[i][j] === 0) {
@@ -104,14 +104,12 @@ function removeClassName(el, name) {
 	el.setAttribute('class', newArray.join());
 }
 
-function toogleActive(player) {
+function toggleActive(player) {
 	const active = 'active';
 	if (player === 1) {
 		removeClassName(xPLayer, active);
 		attachClassName(oPLayer, active);
-	}
-
-	if (player === 2) {
+	} else {
 		removeClassName(oPLayer, active);
 		attachClassName(xPLayer, active);
 	}
@@ -120,9 +118,10 @@ function toogleActive(player) {
 function resetInterface() {
 	const lis = gameBoard.children
 	const len = lis.length;
-	for (let i = 0;  i < len; i += 1) {
+	for (let i = 0; i < len; i += 1) {
 		lis[i].setAttribute('class', 'box');
 	}
+	toggleActive(ticTacToe.player);
 }
 
 function endGame(message) {
@@ -140,7 +139,7 @@ startBtn.addEventListener('click', function (evt) {
 }, false);
 
 newGameBtn.addEventListener('click', function() {
-	ticTacToe.reset();
+	finishScreen.setAttribute('class', 'screen screen-win');
 	changeScreen(finishScreen, boardScreen);
 }, false);
 
@@ -150,6 +149,7 @@ gameBoard.addEventListener('mouseover', function (evt) {
 	
 	const row = parseInt(evt.target.getAttribute('data-row'));
 	const column = parseInt(evt.target.getAttribute('data-column'));
+
 	if (ticTacToe.isEmptySquare(row, column)) {
 		if (ticTacToe.player === 1) {
 			evt.target.style.backgroundImage = 'url(img/o.svg)';
@@ -178,15 +178,18 @@ gameBoard.addEventListener('click', function (evt) {
 		
 		if ( ticTacToe.checkForWinner() ) {
 			
-			if (ticTacToe.player === 1) { attachClassName(finishScreen, 'screen-win-one'); }
-			if (ticTacToe.player === 2) { attachClassName(finishScreen, 'screen-win-two'); }
-			endGame('Winner');
+			switch (ticTacToe.player) {
+				case 1: attachClassName(finishScreen, 'screen-win-one'); break;
+				case 2: attachClassName(finishScreen, 'screen-win-two'); break;
+			}
+			return endGame('Winner');
 
-		} else if (ticTacToe.checkForTie()) {
+		} else if (ticTacToe.isBoardFull()) {
 			attachClassName(finishScreen, 'screen-win-tie');
-			endGame("It's a Tie!");
+			return endGame("It's a Tie!");
 		} else {
-			toogleActive(ticTacToe.changePLayer());
+			console.log('In the else cluase')
+			toggleActive(ticTacToe.changePLayer());
 		}
 	}
 
