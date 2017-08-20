@@ -34,7 +34,6 @@ var ticTacToe = {
 		return (this.board[row][column] === 0);
 	},
 	makeMove: function(row, column) {
-		console.log('makeMove() called with player: ' + this.player);
 		if (this.isEmptySquare(row, column)) {
 			this.board[row][column] = this.player;
 		}
@@ -188,7 +187,7 @@ gameBoard.addEventListener('click', function (evt) {
 			attachClassName(finishScreen, 'screen-win-tie');
 			return endGame("It's a Tie!");
 		} else {
-			console.log('In the else cluase')
+			
 			toggleActive(ticTacToe.changePLayer());
 		}
 	}
