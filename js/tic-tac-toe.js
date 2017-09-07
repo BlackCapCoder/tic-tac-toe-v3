@@ -16,7 +16,7 @@ const messageP = document.getElementsByClassName('message')[0];
 // player 1 is O
 // player 2 is X
 var ticTacToe = {
-	board: [ // The board can use three different numbers: 0 menas empty, 1 menas player one and 2 menas player two
+	board: [ // The board can use three different numbers: 0 means empty, 1 means player one and 2 means player two
 		[0, 0, 0],
 		[0, 0, 0],
 		[0, 0, 0]
@@ -81,9 +81,9 @@ var ticTacToe = {
 		}
 		return true;
 	}
-}
+};
 
-// Helper cuntions
+// Helper functions
 function changeScreen(from, to) {
 	from.style.display = 'none';
 	to.style.display = ''; // empty string means, set back to defaul
